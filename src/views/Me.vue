@@ -3,20 +3,30 @@
     <div class="wrapper_top">
       <div class="wrapper_child">
         <van-image
+          v-if="user"
           round
           width="60"
           height="60"
           :src="base + '/file/image/' + user.avatar"
         />
-        <div class="des">
+        <van-image
+          v-else
+          round
+          width="60"
+          height="60"
+          src="../assets/photo.jpeg"
+        />
+        <div class="des" v-if="user">
           <div class="des-name">{{ user.nickname }}</div>
           <div style="display: flex; padding-top: 7px">
             <van-icon color="#06f" name="wechat-pay" />
             <span class="author-des">{{ user.school }}</span>
           </div>
         </div>
+        <div class="des2" v-else>请登录</div>
       </div>
-      <van-button class="btn" @click="exitLogin">注销</van-button>
+      <van-button class="btn" v-if="user" @click="exitLogin">注销</van-button>
+      <van-button class="btn" v-else @click="goLogin">登录</van-button>
     </div>
     <div class="card card-content">
       <div class="wrapper-title">
@@ -25,15 +35,15 @@
       </div>
       <van-row style="text-align: center">
         <van-col span="8" class="card-item"
-          >{{ user.articleCount }}
+          >{{ user ? user.articleCount : ''}}
           <div class="card-d1">文章</div>
         </van-col>
         <van-col span="8" class="card-item"
-          >{{ user.videoCount }}
+          >{{ user ? user.videoCount : ''}}
           <div class="card-d1">视频</div>
         </van-col>
         <van-col span="8" class="card-item"
-          >{{ user.commentCount }}
+          >{{ user ? user.commentCount : ''}}
           <div class="card-d1">评论</div>
         </van-col>
       </van-row>
@@ -43,8 +53,8 @@
         <van-icon name="apps-o" class="icon" size="16px"/>
         <div class="card-title">内容管理</div>
       </div>
-      <van-cell title="我的文章" is-link to="/userArticle" />
-      <van-cell title="我的视频" is-link to="/UserVideo" />
+      <van-cell title="我的文章" is-link value="文章" @click="goPathArticle"/>
+      <van-cell title="我的视频" is-link value="视频" @click="goPathVideo"/>
     </div>
   </div>
 </template>
@@ -78,12 +88,33 @@ export default {
         .then(() => {
           // on confirm
           localStorage.clear();
-          this.$router.push("/login");
         })
         .catch(() => {
           // on cancel
         });
     },
+    // 跳转路径方法
+    goToPath(path){
+      return this.$router.push(path)
+    },
+    // 去到登陆界面
+    goLogin(){
+      this.goToPath('login')
+    },
+    goPathArticle(){
+      if(!this.user){
+        this.$toast('请先登录')
+        return
+      }
+      this.goToPath('/userArticle')
+    },
+    goPathVideo(){
+      if(!this.user){
+        this.$toast('登录方可查看')
+        return
+      }
+      this.goToPath('/UserVideo')
+    }
   },
 };
 </script>
@@ -149,7 +180,12 @@ export default {
   letter-spacing: 1px;
   padding-top: 6px;
 }
-
+.des2{
+  padding-left: 20px;
+  letter-spacing: 1px;
+  padding-top: 16px;
+  font-weight: bold;
+}
 .des-name {
   font-size: 18px;
   padding-left: 3px;

@@ -56,7 +56,7 @@ export default {
     changeTag(index){
       // 滚动条距离顶部的位置
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop 
-      console.log(scrollTop);
+      // console.log(scrollTop);
       if(index == 0 || index == 1){
         if(scrollTop != 0){
           window.scrollTo(0,0)

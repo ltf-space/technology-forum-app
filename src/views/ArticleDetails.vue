@@ -64,7 +64,8 @@
                v-model="show"
                round
                position="bottom"
-               :style="{ height: '90%' }">
+               :style="{ height: '90%' }"
+               @close="commentForm.content = ''">
       <div style="padding: 15px">
         <div class="popup-title">全部评论</div>
         <div class="popup-content">
@@ -170,6 +171,13 @@ export default {
     },
 // 点击发布按钮触发
     submitComment() {
+      if(!this.commentForm.uid){
+        this.$store.commit('dialog',{
+          title:'提示',
+          msg:'您当前没有登录，是否跳转到登陆界面'
+        })
+        return
+      }
       if(!this.commentForm.content){
         this.$toast('请输入评论内容')
         return
@@ -188,6 +196,14 @@ export default {
     },
 // 点击赞同按钮触发
     agree() {
+      if(!this.commentForm.uid){
+        this.$store.commit('dialog',{
+          title:'提示',
+          msg:'您当前没有登录，是否跳转到登陆界面'
+        })
+        // this.dialog('提示','您当前没有登录，是否跳转到登陆界面')
+        return
+      }
       this.agreeLoading = true
       Agree(this.$route.params.id).then( res => {
         if (res.status) {
@@ -199,7 +215,6 @@ export default {
         }, 700)
       })
     },
-
   },
 
 }

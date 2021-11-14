@@ -68,9 +68,9 @@ const router = new VueRouter({
 })
 
 //路由卫士
-router.beforeEach((to, from, next) => {
-    if (to.name !== 'Login' && !localStorage.getItem("uid")) next({name: 'Login'})
-    else next()
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.name !== 'Login' && !localStorage.getItem("uid")) next({name: 'Login'})
+//     else next()
+// })
 
 export default router

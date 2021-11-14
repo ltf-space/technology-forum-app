@@ -2,7 +2,7 @@
   <div class="main">
     <div class="item" v-for="(item,index) in videoList" :key="index">
       <div class="title">{{ item.title }}</div>
-      <van-icon  v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" />
+      <van-icon  v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
       <div class="des">{{ item.type }}｜发布时间 {{ item.createAt }}</div>
       <div class="play" :style="'height:' + playHeight + 'px'">
         <video class="video"
@@ -44,14 +44,12 @@ export default {
   },
   mounted() {
     this.playHeight = this.windowWidth * (9 / 16)
-    // FindAllVideo().then((res) => {
-    //   if (res.status) {
-    //     this.videoList = res.data
-    //     // this.src = res.data[0].fid
-    //     console.log(res.data)
-    //   }
-    // })
   },
+  methods:{
+    test(){
+      console.log(111);
+    }
+  }
 
 }
 </script>

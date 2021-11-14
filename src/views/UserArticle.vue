@@ -7,7 +7,7 @@
       @click-left="handleBack"
     />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <div style="margin-bottom: 66px">
+      <div style="">
         <user-article-list class="listContent" :list="this.articleList" />
       </div>
     </van-pull-refresh>

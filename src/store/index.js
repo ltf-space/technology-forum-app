@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {Toast} from 'Vant'
+import {Toast} from 'vant'
+import {Dialog} from 'vant'
 Vue.use(Vuex)
 
 import {FindAllArticle} from "@/api/article";
@@ -13,7 +14,20 @@ export default new Vuex.Store({
     onrefresh(state,data){
       this.state.articleList = data
       this.state.isLoading = false
-    }
+    },
+      // 封装函数（弹出框）
+    dialog(state,payload){
+      return Dialog.confirm({
+          title: payload.title,
+          message: payload.msg,
+        }).then(() => {
+          // 点击确认后操作
+          location.href = '/login'
+        })
+        .catch(() => {
+          // 点击取消后操作
+        });
+    },
   },
   actions: {
     ONREFRESH(context){

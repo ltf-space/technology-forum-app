@@ -21,7 +21,7 @@
 
     <van-popup v-model="show" round position="bottom" :style="{ height: '240px' }">
       <div style="padding: 20px">
-        <div class="author">
+        <div class="author" v-if="user">
           <van-image
               round
               width="40"
@@ -77,8 +77,15 @@ export default {
     onSearch() {
       this.$router.push('/search')
     },
-
+    // 点击右上角+按钮
     onClickRight() {
+      if(!this.user){
+        this.$store.commit('dialog',{
+          title:'提示',
+          msg:'登录后才可发表文章，是否跳转到登陆界面'
+        })
+        return
+      }
       this.show = true
     },
   },

@@ -20,14 +20,14 @@
                 />
               </div>
             </div>
-            <div class="star-bar">
-              <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.agreeCount }}</span> 
-              <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.commentCount }}</span>
-              <span class="star-bar-count">{{ item.createAt }}</span>
-              <van-icon color="#eee" style="float: right;padding-top: 3px" name="cross" />
-            </div>
           </div>
         </router-link>
+        <div class="star-bar">
+          <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.agreeCount }}</span> 
+          <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.commentCount }}</span>
+          <span class="star-bar-count">{{ item.createAt }}</span>
+          <van-icon color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
+        </div>
       </div>
 
       <div v-if="!item.hasPoster" class="item">
@@ -41,14 +41,14 @@
                 </div>
               </div>
             </div>
-            <div class="star-bar">
-              <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.agreeCount }}</span> 
-              <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.commentCount }}</span>
-              <span class="star-bar-count">{{ item.createAt }}</span>
-              <van-icon color="#eee" style="float: right;padding-top: 3px" name="cross" />
-            </div>
           </div>
         </router-link>
+        <div class="star-bar">
+          <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.agreeCount }}</span> 
+          <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.commentCount }}</span>
+          <span class="star-bar-count">{{ item.createAt }}</span>
+          <van-icon color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
+        </div>
       </div>
     </div>
   </div>
@@ -71,14 +71,38 @@ export default {
     }
   },
   created(){
-    console.log(this.list);
+    // console.log(this.list);
   },
   mounted() {
-    console.log(this.list);
+    // console.log(this.list);
+  },
+  methods: {
+    async test(){
+      const res = await this.$dialog.confirm({
+        title: '警告',
+        message: '删除后无法撤回，是否删除',
+      })
+      if(res == 'confirm'){
+        console.log('点击了确认按钮');
+      }
+    }
   },
 }
 </script>
 <style scoped>
+.article {
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 5px 0;
+  color: rgba(0, 0, 0, .8);
+  max-height: 33px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 .article-poster {
   min-width: 100px;
   min-height: 63px;
@@ -100,7 +124,7 @@ export default {
 
 .title {
   letter-spacing: 1px;
-  font-weight: 500;
+  font-weight: 600;
   color: rgba(0, 0, 0, .9);
 }
 
@@ -123,23 +147,10 @@ export default {
   color: rgba(0, 0, 0, .6);
 }
 
-.article {
-  font-size: 14px;
-  letter-spacing: 1px;
-  padding: 5px 0;
-  color: rgba(0, 0, 0, .8);
-  max-height: 35px;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
 .star-bar {
   height: 25px;
   padding-top: 8px;
+  padding-left: 8px;
 }
 
 .star-bar-count {
