@@ -143,6 +143,8 @@ export default {
             this.$toast.success("登录成功");
             this.loading = false;
             this.$router.push("/");
+          }else{
+            this.loading = false;
           }
         });
       }
@@ -160,6 +162,8 @@ export default {
               this.fileList = [];
               this.active = 0;
             }, 700);
+          }else{
+            this.loading = false;
           }
         });
       }

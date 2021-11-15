@@ -45,10 +45,15 @@
 
 <!-- 底部tabbar -->
     <div class="bottom-bar">
-      <van-button :loading="agreeLoading"
-                  loading-text="加载中..."
-                  round type="info"
-                  @click="agree">
+      <van-button 
+          ref="agreeButton"
+          :loading="agreeLoading"
+          loading-text="加载中..."
+          round
+          hairline
+          plain
+          type="info"
+          @click="agree">
         <div style="display: flex">
           <van-icon class="bottom-bar-icon" size="20" name="play"/>
           <span class="s1">赞同 {{ data.article.agreeCount }}</span>
@@ -141,6 +146,8 @@ export default {
       },
       content: '',
       show: false,
+      // 默认不点赞
+      isAgree:false
     }
   },
   // created(){
@@ -194,7 +201,7 @@ export default {
         this.commentForm.content = ''
       })
     },
-// 点击赞同按钮触发
+// 点击赞同按钮触发  （待完善，应该再传一个条件给后台用来判断点赞还是取消点赞）
     agree() {
       if(!this.commentForm.uid){
         this.$store.commit('dialog',{
@@ -206,13 +213,28 @@ export default {
       }
       this.agreeLoading = true
       Agree(this.$route.params.id).then( res => {
+        console.log(res);
         if (res.status) {
-          this.data.article.agreeCount += 1
+          if(!this.isAgree){
+            this.data.article.agreeCount += 1
+            this.isAgree = true
+            this.$refs.agreeButton.plain = false
+            this.$refs.agreeButton.hairline = false
+            setTimeout(() => {
+              this.$toast.success("谢谢你的赞同")
+              this.agreeLoading = false
+            }, 700)
+          }else{
+            this.data.article.agreeCount -= 1
+            this.isAgree = false
+            this.$refs.agreeButton.plain = true
+            this.$refs.agreeButton.hairline = true
+            setTimeout(() => {
+              this.$toast.success("取消点赞")
+              this.agreeLoading = false
+            }, 700)
+          }
         }
-        setTimeout(() => {
-          this.$toast.success("谢谢你的赞同")
-          this.agreeLoading = false
-        }, 700)
       })
     },
   },

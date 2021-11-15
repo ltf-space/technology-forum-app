@@ -77,14 +77,15 @@ export default {
     // console.log(this.list);
   },
   methods: {
-    async test(){
-      const res = await this.$dialog.confirm({
+    test(){
+      this.$dialog.confirm({
         title: '警告',
         message: '删除后无法撤回，是否删除',
-      })
-      if(res == 'confirm'){
+      }).then(()=> {
         console.log('点击了确认按钮');
-      }
+      }).catch(()=> {
+        console.log('点击了取消按钮');
+      })
     }
   },
 }

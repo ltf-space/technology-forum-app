@@ -8,7 +8,7 @@
     />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div style="">
-        <user-article-list class="listContent" :list="this.articleList" />
+        <user-article-list class="listContent" :list="articleList" />
       </div>
     </van-pull-refresh>
   </div>

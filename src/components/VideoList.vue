@@ -47,7 +47,14 @@ export default {
   },
   methods:{
     test(){
-      console.log(111);
+      this.$dialog.confirm({
+        title: '警告',
+        message: '删除后无法撤回，是否删除',
+      }).then(()=> {
+        console.log('点击了确认按钮');
+      }).catch(()=> {
+        console.log('点击了取消按钮');
+      })
     }
   }
 

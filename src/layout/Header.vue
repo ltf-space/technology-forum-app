@@ -2,7 +2,7 @@
   <div>
     <van-nav-bar :border="false" fixed ref="navbar" @click-left="onClickLeft" @click-right="onClickRight">
       <template #left>
-        <p class="header-logo">技术论坛</p>
+        <p class="header-logo">生活论坛</p>
       </template>
       <template #title>
         <div @click="onSearch">
