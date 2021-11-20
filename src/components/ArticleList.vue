@@ -6,7 +6,8 @@
         <router-link :to="'/article/details/' + item.article.id ">
           <div class="content">
             <div class="title">{{ item.article.title }}</div>
-            <div style="display: flex">
+            <div style="">
+              <!-- 用户头像，名字等信息 -->
               <div>
                 <div class="author">
                   <van-image
@@ -19,17 +20,20 @@
                   <van-icon color="#06f" style="padding-left: 7px;" name="wechat-pay"/>
                   <span class="author-des">{{ item.author.school }}认证</span>
                 </div>
+              </div>
+              <div class="article-content">
+                <!-- 文章内容区域 -->
                 <div class="article">
                   {{ item.article.content }}
                 </div>
-              </div>
-              <div class="article-poster" v-if="item.article.hasPoster">
-                <van-image
-                    width="100px"
-                    height="63px"
-                    fit="contain"
-                    :src="base + '/file/image/' + item.article.poster"
-                />
+                <div class="article-poster">
+                  <van-image
+                      width="100px"
+                      height="63px"
+                      fit="contain"
+                      :src="base + '/file/image/' + item.article.poster"
+                  />
+                </div>
               </div>
             </div>
             <div class="star-bar">
@@ -98,13 +102,15 @@ export default {
 
 <style scoped>
 .article-poster {
-  min-width: 100px;
-  min-height: 63px;
+  width: 100px;
+  height: 63px;
   border-radius: 5px;
-  margin: 15px 0 0 10px;
   object-fit: fill;
 }
-
+.article-content{
+  display: flex;
+  justify-content: space-between;
+}
 .item {
   width: 100%;
   background: #ffffff;
@@ -147,6 +153,7 @@ export default {
   color: rgba(0, 0, 0, .8);
   max-height: 35px;
 
+/* 超过两行显示省略号 */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

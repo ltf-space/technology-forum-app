@@ -16,6 +16,9 @@
             autofocus='true'
         />
       </template>
+      <template #right>
+        <p class="header-cancle" @click="goBack">取消</p>
+      </template>
     </van-nav-bar>
     <div style="width: 100%;height: 50px"/>
 
@@ -63,11 +66,14 @@ export default {
         }
       })
     },
-// 点击取消图标触发
+// 点击搜索框取消图标触发
     onClear() {
       this.list = []
     },
-
+    // 点击右上角取消按钮回退
+    goBack(){
+      this.$router.back()
+    }
   },
 
 }
@@ -90,35 +96,11 @@ export default {
   padding: 15px;
   color: rgba(0, 0, 0, .6);
 }
-
-.card-d {
-  letter-spacing: 1px;
+.header-cancle{
   font-size: 14px;
+  letter-spacing: 1px;
   font-weight: bold;
-  color: rgba(0, 0, 0, .8);
-  padding-top: 20px;
-  padding-left: 20px;
-}
-
-.van-nav-bar {
-  background: #ffffff;
-  z-index: 99;
-  height: 50px;
-}
-
-::v-deep .van-nav-bar__title {
-  margin-right: 1vw;
-  margin-left: 18vw;
-  width: 75vw;
-  max-width: 100%;
-}
-
-::v-deep .van-tabs__wrap {
-  padding-bottom: 10px;
-}
-
-::v-deep .van-tabs__line {
-  width: 15px;
+  color: #06f;
 }
 
 .header-logo {
@@ -126,5 +108,6 @@ export default {
   letter-spacing: 1px;
   font-weight: bold;
   color: #06f;
+  margin-right: 20px;
 }
 </style>

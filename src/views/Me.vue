@@ -33,20 +33,18 @@
         <van-icon name="friends-o" size="16px" class="icon"/>
         <div class="card-title">我的数据</div>
       </div>
-      <van-row style="text-align: center">
-        <van-col span="8" class="card-item"
-          >{{ user ? user.articleCount : ''}}
+      <van-row style="text-align: center" v-if="!user">
+        <van-col span="8" class="card-item">
           <div class="card-d1">文章</div>
         </van-col>
-        <van-col span="8" class="card-item"
-          >{{ user ? user.videoCount : ''}}
+        <van-col span="8" class="card-item" >
           <div class="card-d1">视频</div>
         </van-col>
-        <van-col span="8" class="card-item"
-          >{{ user ? user.commentCount : ''}}
+        <van-col span="8" class="card-item">
           <div class="card-d1">评论</div>
         </van-col>
       </van-row>
+      <div id="main-echarts" v-else></div>
     </div>
     <div class="card card-content2">
       <div class="wrapper-title">
@@ -61,6 +59,7 @@
 
 <script>
 import { BASE_RUL } from "@/utils/request";
+import * as echarts from 'echarts';
 export default {
   data() {
     return {
@@ -69,6 +68,8 @@ export default {
       user: null,
       // 默认显示文章列表
       active:0,
+      // echarts对象
+      mycharts:null
     };
   },
   components:{
@@ -76,6 +77,75 @@ export default {
   created() {
     this.user = JSON.parse(localStorage.getItem("user"));
     // console.log(this.user.articleCount);
+  },
+  mounted(){
+    window.onresize = () => {
+      this.mycharts.resize()
+    }
+    //初始化echarts对象
+    this.mycharts = echarts.init(document.getElementById("main-echarts"))
+    const option = {
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'right'
+      },
+      series: [
+        {
+          name: '生活论坛',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          // 控制图形的位置（左右，上下）
+          center:['40%','45%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            // 点击图形出现辅助信息，false不显示
+            label: {
+              show: false,
+              fontSize: '20',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: this.user.articleCount, name: '文章数量' },
+            { value: this.user.videoCount, name: '视频数量' },
+            { value: this.user.commentCount, name: '评论数量' },
+          ],
+          labelLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, 0.3)'
+            },
+            smooth: 0.2,
+            length: 10,
+            length2: 20
+          },
+          // 点击图形时会出现边框效果
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(255, 255, 255, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+
+    option && this.mycharts.setOption(option);
   },
   methods: {
     // 退出登录
@@ -127,11 +197,16 @@ export default {
   margin-top: 20px;
   letter-spacing: 1px;
 }
+/* 图标区域 */
+#main-echarts{
+  width: 100%;
+  height: 150px;
+}
 .card-content2{
   height: 140px;
 }
 .card-content {
-  height: 100px;
+  height: 180px;
 }
 .wrapper-title{
   display: flex;

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "echarts": "^5.2.2",
     "markdown-it-vue": "^1.1.6",
     "vant": "^2.12.31",
     "vue": "^2.6.11",

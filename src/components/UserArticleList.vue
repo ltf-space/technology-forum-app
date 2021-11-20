@@ -5,11 +5,9 @@
         <router-link :to="'/article/details/' + item.id ">
           <div class="content">
             <div class="title">{{ item.title }}</div>
-            <div style="display: flex">
-              <div>
-                <div class="article">
-                  {{ item.content }}
-                </div>
+            <div class="article-content">
+              <div class="article">
+                {{ item.content }}
               </div>
               <div class="article-poster" v-if="item.hasPoster">
                 <van-image
@@ -91,6 +89,21 @@ export default {
 }
 </script>
 <style scoped>
+.item {
+  width: 100%;
+  background: #ffffff;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.content {
+  padding: 10px;
+}
+
+.title {
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, .9);
+}
 .article {
   font-size: 14px;
   letter-spacing: 1px;
@@ -98,6 +111,7 @@ export default {
   color: rgba(0, 0, 0, .8);
   max-height: 33px;
 
+  /* 超过两行显示省略号 */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -108,25 +122,11 @@ export default {
   min-width: 100px;
   min-height: 63px;
   border-radius: 5px;
-  margin: 15px 0 0 10px;
   object-fit: fill;
 }
-
-.item {
-  width: 100%;
-  background: #ffffff;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.content {
-  padding: 10px;
-}
-
-.title {
-  letter-spacing: 1px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, .9);
+.article-content{
+  display: flex;
+  justify-content: space-between;
 }
 
 .author {
