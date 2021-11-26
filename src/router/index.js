@@ -59,6 +59,11 @@ const routes = [
         name: 'UserVideo',
         component: () => import('../views/UserVideo')
     },
+    {
+      path:'/user/:uid',
+      // name:UserPage,
+      component: () => import('../views/UserPage')
+    }
 ]
 
 const router = new VueRouter({

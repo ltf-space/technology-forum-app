@@ -9,6 +9,7 @@
             width="37"
             height="37"
             :src="base + '/file/image/' + data.author.avatar"
+            @click="goUserInfo"
         />
         <div class="des">
           <div class="des-name">{{ data.author.nickname }}</div>
@@ -237,6 +238,10 @@ export default {
         }
       })
     },
+    // 点击用户头像进入用户主页
+    goUserInfo(){
+      this.$router.push('/user/' + this.data.author.id)
+    }
   },
 
 }

@@ -24,7 +24,7 @@
           <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.agreeCount }}</span> 
           <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.commentCount }}</span>
           <span class="star-bar-count">{{ item.createAt }}</span>
-          <van-icon color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
+          <van-icon v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
           <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.agreeCount }}</span> 
           <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.commentCount }}</span>
           <span class="star-bar-count">{{ item.createAt }}</span>
-          <van-icon color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
+          <van-icon v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
         </div>
       </div>
     </div>
@@ -66,6 +66,10 @@ export default {
     list: {
       type:Object,
       default:()=>{}
+    },
+    isIcon:{
+      type:Boolean,
+      default:true
     }
   },
   created(){
