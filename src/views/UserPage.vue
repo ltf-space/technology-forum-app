@@ -101,7 +101,7 @@ export default {
   position: relative;
 }
 .go-back{
-  position: absolute;
+  position: fixed;
   left: 8px;
   top: 10px;
 }
@@ -109,9 +109,10 @@ export default {
   position: absolute;
   left: 10px;
   top: 135px;
+  border: 1px solid rgb(207, 106, 106);
 }
 .user-info{
-  margin: 30px 0 0 0;
+  margin: 40px 0 0 0;
   padding: 6px 10px;
   background: #fff;
   display: flex;

@@ -5,7 +5,7 @@
         v-for="(item, index) in tagList"
         :key="index"
         :title="item"
-        style="background: #f5f6f7"
+        style="background: #f5f6f7;"
       >
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <div style="margin-bottom: 66px">
@@ -121,8 +121,13 @@ export default {
   background: #f5f6f7 !important;
   position: relative;
 }
+/* 导航条下边框细线 */
+::v-deep .van-tabs__wrap{
+  border-bottom: 2px solid #eee;
+}
+/* 横向导航条标签下方的蓝色横杠 */
 ::v-deep .van-tabs__line {
-  width: 20px;
+  width: 26px;
   background-color: #0066ff;
 }
 .btn {

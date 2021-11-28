@@ -401,14 +401,17 @@ export default {
 }
 
 .bottom-bar-input {
-  height: 40px;
+  height: 35px;
   font-size: 13px;
   letter-spacing: 1px;
-  color: rgba(0, 0, 0, .4);
-  margin-top: 13px;
+  color: #000;
+  margin-top: 16px;
   margin-left: 20px;
+  padding-left: 20px;
   width: 70%;
   border: none;
+  background: rgba(134, 123, 123, 0.192);
+  border-radius: 50px;
 }
 
 .comments-item {
