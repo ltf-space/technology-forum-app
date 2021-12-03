@@ -8,7 +8,7 @@
     />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div style="">
-        <user-article-list class="listContent" :list="articleList" />
+        <user-article-list class="listContent" :list="articleList" @reloadArticle = 'reloadArticle'/>
       </div>
     </van-pull-refresh>
   </div>
@@ -36,6 +36,10 @@ export default {
     this.getArticle();
   },
   methods: {
+    // 重新加载列表
+    reloadArticle(){
+      this.getArticle()
+    },
     // 获取用户所有文章
     getArticle() {
       userArticle(this.uid).then((res) => {

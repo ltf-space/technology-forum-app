@@ -28,7 +28,7 @@
               height="40"
               :src="base + '/file/image/' + user.avatar"
           />
-          <span style="padding-top: 10px;padding-left: 15px">你在 {{ user.createAt }} 来到了论坛</span>
+          <span style="padding-top: 10px;padding-left: 15px">你在 {{ user.createAt | getTime}}天前拥有了论坛账号</span>
         </div>
 
         <van-row gutter="20">
@@ -67,7 +67,18 @@ export default {
       user: JSON.parse(localStorage.getItem('user')),
     }
   },
-
+  filters:{
+    // 转换时间格式
+    getTime(ms){
+      //2021-11-15 15:24:43
+      let datime = Date.parse(ms)
+      let time = new Date();
+      let msi = time.getTime();
+      let cha = msi - datime;
+      let days =  Math.ceil(cha / 1000 / 60 / 60 / 24)
+      return days
+    }
+  },
   methods: {
 
     onClickLeft() {

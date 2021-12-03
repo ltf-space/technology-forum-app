@@ -24,7 +24,7 @@
           <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.agreeCount }}</span> 
           <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.commentCount }}</span>
           <span class="star-bar-count">{{ item.createAt }}</span>
-          <van-icon v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
+          <van-icon v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="delArticle(item.uid,item.id)"/>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
           <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.agreeCount }}</span> 
           <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.commentCount }}</span>
           <span class="star-bar-count">{{ item.createAt }}</span>
-          <van-icon v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
+          <van-icon v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="delArticle(item.uid,item.id)"/>
         </div>
       </div>
     </div>
@@ -54,12 +54,15 @@
 
 <script>
 import { BASE_RUL } from "@/utils/request";
+import { delUserArticle } from '../api/article'
+import { userArticle } from "@/api/article";
 export default {
   name:'UserArticleList',
   components:{},
   data(){
     return {
-      base:BASE_RUL
+      base:BASE_RUL,
+      user:null,
     }
   },
   props: {
@@ -73,18 +76,37 @@ export default {
     }
   },
   created(){
-    // console.log(this.list);
+    this.user = localStorage.getItem('user')
   },
   mounted() {
     // console.log(this.list);
   },
   methods: {
-    test(){
+    // 获取用户所有文章
+    // getArticle() {
+    //   userArticle(this.user.id).then( res => {
+    //     console.log(res);
+    //     if (!res.status) return;
+    //     this.articleList = res.data;
+    //   });
+    // },
+    // 点击删除按钮触发
+    delArticle(uid,id){
       this.$dialog.confirm({
         title: '警告',
         message: '删除后无法撤回，是否删除',
       }).then(()=> {
-        console.log('点击了确认按钮');
+        delUserArticle(uid,id).then( res => {
+          if(!res.status)return
+          this.$toast.success('删除成功')
+          console.log(res);
+          this.user = JSON.parse(localStorage.getItem('user'))
+          // 使文章数减1，评论数相应减少
+          this.user.articleCount--
+          this.user.commentCount -= res.data
+          localStorage.setItem('user',JSON.stringify(this.user))
+          this.$emit('reloadArticle')
+        })
       }).catch(()=> {
         console.log('点击了取消按钮');
       })

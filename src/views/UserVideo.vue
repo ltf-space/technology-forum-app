@@ -8,7 +8,7 @@
     />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div style="margin-bottom: 66px">
-        <VideoList :videoList='videoList' :isIcon='true'/>
+        <VideoList :videoList='videoList' :isIcon='true' @reloadVideo = 'reloadVideo'/>
       </div>
     </van-pull-refresh>
   </div>
@@ -44,12 +44,16 @@ export default {
         this.isLoading = false;
       }, 1000);
     },
+    // 接收子组件传过来的事件，重新加载视频列表
+    reloadVideo(){
+      this.getVideos()
+    },
     // 获取用户所有视频
     getVideos(){
       userVideo(this.uid).then( res => {
         if (!res.status) return
         this.videoList = res.data
-        // console.log(res)
+        console.log(this.videoList)
       })
     },
     // 点击左上角返回按钮触发

@@ -2,7 +2,7 @@
   <div class="main">
     <div class="item" v-for="(item,index) in videoList" :key="index">
       <div class="title">{{ item.title }}</div>
-      <van-icon  v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="test"/>
+      <van-icon  v-if="isIcon" color="#eee" style="float: right;padding-top: 3px" name="cross" @click="delVideo(item.uid,item.id)"/>
       <div class="des">{{ item.type }}｜发布时间 {{ item.createAt }}</div>
       <div class="play" :style="'height:' + playHeight + 'px'">
         <video class="video"
@@ -19,7 +19,7 @@
 
 <script>
 import { BASE_RUL } from "@/utils/request";
-// import { FindAllVideo } from "@/api/video";
+import { delUserVideo } from "@/api/video";
 
 export default {
 
@@ -29,7 +29,8 @@ export default {
       windowWidth: document.documentElement.clientWidth - 30,  //实时屏幕宽度
       windowHeight: document.documentElement.clientHeight,   //实时屏幕高度
       playHeight: 0,
-      // src: require('../assets/test.mp4'),
+      // 用户信息
+      user:null
     }
   },
   props:{
@@ -46,12 +47,22 @@ export default {
     this.playHeight = this.windowWidth * (9 / 16)
   },
   methods:{
-    test(){
+    delVideo(uid,id){
       this.$dialog.confirm({
         title: '警告',
         message: '删除后无法撤回，是否删除',
       }).then(()=> {
         console.log('点击了确认按钮');
+        delUserVideo(uid,id).then( res => {
+          if(!res.status)return
+          this.$toast.success('删除成功')
+          this.user = JSON.parse(localStorage.getItem('user'))
+          // 将视频数减少1
+          this.user.videoCount--
+          localStorage.setItem('user',JSON.stringify(this.user))
+          // 重新加载视频列表
+          this.$emit('reloadVideo')
+        })
       }).catch(()=> {
         console.log('点击了取消按钮');
       })

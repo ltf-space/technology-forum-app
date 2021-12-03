@@ -75,77 +75,80 @@ export default {
   components:{
   },
   created() {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = JSON.parse(localStorage.getItem("user")) || null;
     // console.log(this.user.articleCount);
   },
   mounted(){
-    window.onresize = () => {
-      this.mycharts.resize()
-    }
-    //初始化echarts对象
-    this.mycharts = echarts.init(document.getElementById("main-echarts"))
-    const option = {
-      tooltip: {
-        trigger: 'item'
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'right'
-      },
-      series: [
-        {
-          name: '生活论坛',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          // 控制图形的位置（左右，上下）
-          center:['40%','45%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            // 点击图形出现辅助信息，false不显示
+    if(this.user){
+
+      window.onresize = () => {
+        this.mycharts.resize()
+      }
+      //初始化echarts对象
+      this.mycharts = echarts.init(document.getElementById("main-echarts"))
+      const option = {
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'right'
+        },
+        series: [
+          {
+            name: '生活论坛',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            // 控制图形的位置（左右，上下）
+            center:['40%','45%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
             label: {
               show: false,
-              fontSize: '20',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: [
-            { value: this.user.articleCount, name: '文章数量' },
-            { value: this.user.videoCount, name: '视频数量' },
-            { value: this.user.commentCount, name: '评论数量' },
-          ],
-          labelLine: {
-            lineStyle: {
-              color: 'rgba(255, 255, 255, 0.3)'
+              position: 'center'
             },
-            smooth: 0.2,
-            length: 10,
-            length2: 20
-          },
-          // 点击图形时会出现边框效果
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(255, 255, 255, 0.5)'
+            emphasis: {
+              // 点击图形出现辅助信息，false不显示
+              label: {
+                show: false,
+                fontSize: '20',
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: this.user.articleCount, name: '文章数量' },
+              { value: this.user.videoCount, name: '视频数量' },
+              { value: this.user.commentCount, name: '评论数量' },
+            ],
+            labelLine: {
+              lineStyle: {
+                color: 'rgba(255, 255, 255, 0.3)'
+              },
+              smooth: 0.2,
+              length: 10,
+              length2: 20
+            },
+            // 点击图形时会出现边框效果
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(255, 255, 255, 0.5)'
+              }
             }
           }
-        }
-      ]
-    };
-
-    option && this.mycharts.setOption(option);
+        ]
+      };
+  
+      option && this.mycharts.setOption(option);
+    }
   },
   methods: {
     // 退出登录

@@ -49,3 +49,10 @@ export function userArticle(uid) {
         method: 'get',
     })
 }
+// 根据用户uid和文章id删除文章
+export function delUserArticle(uid,aid) {
+    return service({
+        url: `/article/uid/${uid}/${aid}`,
+        method: 'get',
+    })
+}
