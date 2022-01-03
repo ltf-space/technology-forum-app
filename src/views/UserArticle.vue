@@ -43,9 +43,8 @@ export default {
     // 获取用户所有文章
     getArticle() {
       userArticle(this.uid).then((res) => {
-        console.log(res);
         if (!res.status) return;
-        this.articleList = res.data;
+        this.articleList = res.data.articles;
       });
     },
     // 点击左上角返回按钮触发
@@ -69,7 +68,6 @@ export default {
 }
 .listContent{
   
-  padding: 0 6px;
   height: calc(100vh - 46px);
   overflow-y: auto;
 }

@@ -119,11 +119,13 @@ export default {
 }
 .item {
   width: 100%;
+  min-height: 170px;
   background: #ffffff;
   margin-bottom: 10px;
 }
 
 .content {
+  min-height: 150px;
   padding: 10px;
 }
 

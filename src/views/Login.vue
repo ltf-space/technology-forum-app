@@ -25,6 +25,12 @@
         class="input input_password"
       />
       <div class="password_border"></div>
+      <input
+        placeholder="请输入验证码"
+        v-model="getStrCode"
+        class="input_code"
+      />
+      <em class="strCode" @click="referCode"><span>验证码：</span><strong>{{code}}</strong></em>
       <van-button
         @click="submitSignIn"
         round
@@ -100,6 +106,10 @@ export default {
       loading: false,
       active: 0,
       fileList: [],
+      // 验证码显示
+      code:'',
+      // 输入框验证码绑定
+      getStrCode:'',
       // 登录表单信息
       signInForm: {
         phone: "",
@@ -115,7 +125,9 @@ export default {
       },
     };
   },
-
+  created(){
+    this.getCode()
+  },
   methods: {
     // 文件上传成功后的回调
     onRead() {
@@ -135,6 +147,11 @@ export default {
     // 点击登录按钮触发
     submitSignIn() {
       if (checkSignInForm(this.signInForm)) {
+        if(this.getStrCode.toLowerCase() != this.code.toLowerCase()){
+          this.$toast.fail("验证码输入错误");
+          this.referCode()
+          return;
+        }
         this.loading = true;
         Login(this.signInForm).then((res) => {
           if (res.status) {
@@ -146,6 +163,9 @@ export default {
           }else{
             this.loading = false;
           }
+        }).catch( err => {
+          this.$toast.fail('登陆失败，请检查以重新登陆')
+          this.loading = false;
         });
       }
     },
@@ -168,6 +188,28 @@ export default {
         });
       }
     },
+    // 获取验证码
+    getCode(){
+      // 先将验证码置空，防止后续验证码叠加
+      this.code = ''
+      // 从中随机选取4个字符
+      let strCode = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789'
+      for (let i = 0; i < 4; i++) {
+        let n = Math.round(Math.random()*61)
+        // 在str中没有找到重复字符
+        if(this.code.indexOf(strCode[n]) === -1){
+          this.code += strCode[n]
+        }else{
+          // 出现重复，将i--，保证验证码四位
+          i--
+        }
+      }
+      return this.code
+    },
+    // 点击验证码刷新
+    referCode(){
+      this.getCode()
+    }
   },
 };
 </script>
@@ -274,7 +316,23 @@ export default {
   transform: scale(0, 1);
   transition: 0.2s ease;
 }
-
+.input_code{
+  width: 50%;
+  border: none;
+  border-bottom: 2px solid #000;
+  outline: none;
+  background: transparent;
+  letter-spacing: 2px;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 13px;
+}
+.strCode{
+  letter-spacing: 4px;
+}
+.strCode span{
+  font-size: 10px;
+}
 .btn {
   width: 100%;
   margin: 30px 0;
