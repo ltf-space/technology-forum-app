@@ -14,6 +14,7 @@
                     width="20"
                     height="20"
                     :src="base + '/file/image/' + item.author.avatar"
+                    lazy-load
                     @click.stop="clickImg($event,item.author.id)"
                 />
                 <span class="author-name">{{ item.author.nickname }}</span>
@@ -32,6 +33,7 @@
                     height="63px"
                     fit="contain"
                     :src="base + '/file/image/' + item.article.poster"
+                    lazy-load
                 />
               </div>
             </div>
@@ -56,6 +58,7 @@
                     width="20"
                     height="20"
                     :src="base + '/file/image/' + item.author.avatar"
+                    lazy-load
                 />
                 <span class="author-name">{{ item.author.nickname }}</span>
                 <van-icon color="#06f" style="padding-left: 7px;" name="wechat-pay"/>

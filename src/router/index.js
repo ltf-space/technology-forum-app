@@ -29,36 +29,43 @@ const routes = [
             },
         ]
     },
+    // 文章详情
     {
         path: '/article/details/:id',
         name: 'ArticleDetails',
         component: () => import('../views/ArticleDetails')
     },
+    // 发表文章及视频页
     {
         path: '/upload',
         name: 'Upload',
         component: () => import('../views/Upload')
     },
+    // 搜索页
     {
         path: '/search',
         name: 'Search',
         component: () => import('../views/Search')
     },
+    // 登录
     {
         path: '/login',
         name: 'Login',
         component: () => import('../views/Login')
     },
+    // 用户文章列表页
     {
         path: '/userArticle',
         name: 'UserArticle',
         component: () => import('../views/UserArticle')
     },
+    // 用户视频页
     {
         path: '/userVideo',
         name: 'UserVideo',
         component: () => import('../views/UserVideo')
     },
+    // 用户个人主页
     {
       path:'/user/:uid',
       // name:UserPage,

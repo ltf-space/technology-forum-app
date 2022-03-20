@@ -1,7 +1,10 @@
 import axios from "axios"
 import {Toast} from "vant"
 
-export const BASE_RUL = 'http://localhost:8080/api'
+// export const BASE_RUL = 'http://localhost:8080/api'
+// 可以在相同局域网下打开
+// export const BASE_RUL = 'http://192.168.31.134:8080/api'
+export const BASE_RUL = 'http://192.168.101.120:8080/api'
 
 const request = axios.create({
     baseURL: BASE_RUL,
@@ -68,7 +71,8 @@ request.interceptors.response.use(
       } else {
         // 超时处理
         if (JSON.stringify(error).includes('timeout')) {
-          Message.error('服务器响应超时，请刷新当前页')
+          // Message.error('服务器响应超时，请刷新当前页')
+          Toast.fail('服务器响应超时，请刷新当前页')
         }
         error.message = '连接服务器失败'
       }

@@ -1,5 +1,5 @@
 <template>
-  <div style="background: ##FBFCFC  ">
+  <div style="background: ##fbfcfc">
     <div v-for="(item, index) in list" :key="index">
       <div v-if="item.hasPoster" class="item">
         <router-link :to="'/article/details/' + item.id">
@@ -11,11 +11,13 @@
               </div>
               <div class="article-poster" v-if="item.hasPoster">
                 <van-image
-                  width="100px"
-                  height="63px"
+                  width="100"
+                  height="63  "
                   fit="contain"
+                  lazy-load
                   :src="base + '/file/image/' + item.poster"
-                />
+                >
+                </van-image>
               </div>
             </div>
           </div>

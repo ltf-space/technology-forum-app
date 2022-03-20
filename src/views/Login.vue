@@ -28,7 +28,7 @@
       <input
         placeholder="请输入验证码"
         v-model="getStrCode"
-        class="input_code"
+        class=" input input_code"
       />
       <em class="strCode" @click="referCode"><span>验证码：</span><strong>{{code}}</strong></em>
       <van-button
@@ -231,16 +231,22 @@ export default {
   font-size: 16px;
   letter-spacing: 1px;
 }
-
+::v-deep .van-tabs__nav{
+  background: transparent;
+}
+::v-deep .van-tab--active{
+  color: #fff;
+}
 .main {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  background: #23343c;
 }
 
 .header {
   height: 110px;
-  /* background: #34495E; */
-  background-image: -moz-linear-gradient(
+  background: transparent;
+  /* background-image: -moz-linear-gradient(
     135deg,
     rgb(163, 223, 255),
     rgb(179, 180, 255)
@@ -254,7 +260,7 @@ export default {
     135deg,
     rgb(163, 223, 255),
     rgb(179, 180, 255)
-  );
+  ); */
   text-align: center;
   letter-spacing: 1px;
 }
@@ -289,6 +295,7 @@ export default {
   margin: 10px 0;
   padding: 10px;
   font-size: 13px;
+  color: #fff;
 }
 .input_phone:focus ~ .phone_border {
   transform: scale(1, 1);
@@ -302,7 +309,7 @@ export default {
   position: absolute;
   top: 46px;
   left: 0;
-  background: rgb(48, 46, 46);
+  background: #eee;
   transform: scale(0, 1);
   transition: 0.2s ease;
 }
@@ -312,14 +319,14 @@ export default {
   position: absolute;
   bottom: 200px;
   left: 0;
-  background: rgb(48, 46, 46);
+  background: #eee;
   transform: scale(0, 1);
   transition: 0.2s ease;
 }
 .input_code{
   width: 50%;
   border: none;
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid #eee;
   outline: none;
   background: transparent;
   letter-spacing: 2px;
@@ -332,6 +339,7 @@ export default {
 }
 .strCode span{
   font-size: 10px;
+  color: #fff;
 }
 .btn {
   width: 100%;
@@ -340,6 +348,6 @@ export default {
 
 ::v-deep .van-tabs__line {
   background-color: #0066ff;
-  width: 30px;
+  width: 50px;
 }
 </style>
