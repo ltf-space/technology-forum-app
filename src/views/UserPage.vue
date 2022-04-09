@@ -10,6 +10,7 @@
       round
       width="60"
       height="60"
+      fit="cover"
       :src="base + '/file/image/' + userInfo.author.avatar"
     />
     <div class="user-content">
@@ -102,11 +103,12 @@ export default {
 }
 .img-content {
   width: 100%;
-  height: 160px;
+  height: 180px;
   /* background: url("../assets/background.jpg") no-repeat 0 0 / 100% 160px; */
   background: url("../assets/background.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  background-position: center;
   position: relative;
 }
 .go-back {
@@ -117,7 +119,7 @@ export default {
 .round {
   position: absolute;
   left: 10px;
-  top: 135px;
+  top: 145px;
   border: 1px solid rgb(207, 106, 106);
 }
 .user-content{

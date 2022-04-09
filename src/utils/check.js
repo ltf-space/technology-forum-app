@@ -1,5 +1,5 @@
 import {Toast} from "vant";
-
+// 校验登录信息
 export function checkSignInForm(form) {
     if (!form.phone || !form.password) {
         Toast.fail("请输入手机号和密码")
@@ -16,6 +16,7 @@ export function checkSignInForm(form) {
     return true
 }
 
+// 校验注册信息
 export function checkSignUpForm(form) {
   let phone_pattern = /^[1][3,4,5,7,8][0-9]{9}$/
     if (!form.avatar) {
@@ -34,17 +35,18 @@ export function checkSignUpForm(form) {
         Toast.fail("请输入3~10个字符的昵称")
         return false
     }
-    if (form.password.length < 6 || form.nickname.length > 20) {
+    if (form.password.length < 6 || form.password.length > 20) {
         Toast.fail("请输入6~20个字符的密码")
         return false
     }
-    if (form.password.length < 4 || form.nickname.length > 20) {
+    if (form.school.length < 4 || form.school.length > 20) {
         Toast.fail("请输入正确的学校")
         return false
     }
     return true
 }
 
+// 校验视频信息
 export function checkVideoForm(form) {
     if (!form.title) {
         Toast.fail("请输入视频标题")
@@ -65,6 +67,7 @@ export function checkVideoForm(form) {
     return true
 }
 
+// 校验文章信息
 export function checkArticleForm(form) {
     if (!form.title) {
         Toast.fail("请输入文章标题")
@@ -83,4 +86,25 @@ export function checkArticleForm(form) {
         return false
     }
     return true
+}
+
+// 校验更改密码信息
+export function checkPwdForm(form,surePassword) {
+  if (!form.password || !form.newPassword || !surePassword) {
+    Toast.fail("请填写完整表单信息")
+    return false
+  }
+  if (form.password.length < 6 || form.password.length > 20) {
+    Toast.fail("请输入6~20个字符的原密码")
+    return false
+  }
+  if (form.newPassword.length < 6 || form.newPassword.length > 20) {
+    Toast.fail("请输入6~20个字符的新密码")
+    return false
+  }
+  if (form.newPassword !== surePassword) {
+    Toast.fail("请重新输入确认密码")
+    return false
+  }
+  return true
 }

@@ -8,6 +8,7 @@
             round
             width="37"
             height="37"
+            fit="cover"
             :src="base + '/file/image/' + data.author.avatar"
             @click="goUserInfo"
         />
@@ -37,8 +38,10 @@
             class="avatar"
             width="100"
             height="100"
+            fit="cover"
             error-icon='node实现增删改查'
             :src="base + '/file/image/' + data.article.poster"
+            @click="openPreview"
         />
       </div>
       <div class="content-time">发布于 {{ data.article.createAt }} · 未经作者允许禁止转载</div>
@@ -52,12 +55,14 @@
           loading-text="加载中..."
           round
           hairline
-          plain
+          :plain='plain'
           type="info"
           @click="agree">
         <div style="display: flex">
-          <van-icon class="bottom-bar-icon" size="20" name="play"/>
-          <span class="s1">赞同 {{ data.article.agreeCount }}</span>
+          <van-icon class="bottom-bar-icon" size="20" name="play" v-if="plain"/>
+          <van-icon class="top-bar-icon" size="20" name="play" v-else/>
+          <span class="s1" v-if="plain">赞同 {{ data.article.agreeCount }}</span>
+          <span class="s1" v-else>已赞同 {{ data.article.agreeCount }}</span>
         </div>
       </van-button>
       <a @click="show = true" style="float: right">
@@ -145,23 +150,37 @@ export default {
         article: {},
         author: {},
       },
+      images:[{
+
+      }],
       content: '',
       show: false,
       // 默认不点赞
-      isAgree:false
+      isAgree:false,
+      plain:true,
     }
   },
   // created(){
   //   let 
   // },
-
+  // computed:{
+  //   agree(){
+  //     return this.plain?'赞同':'已赞同'
+  //   }
+  // },
   mounted() {
     // 页面渲染后查到内容详情
-    FindArticleById(this.$route.params.id).then( res => {
+    FindArticleById(this.$route.params.id,this.commentForm.uid).then( res => {
       console.log(res);
       if (res.status) {
         this.data = res.data
         this.hasPoster = res.data.article.hasPoster
+        // 说明当前用户对此文章已经点过赞
+        if(res.data.flag){
+          this.plain = false
+        }else{
+          this.plain = true
+        }
       }
       this.content = this.data.article.content.toString()
     })
@@ -213,25 +232,25 @@ export default {
         return
       }
       this.agreeLoading = true
-      Agree(this.$route.params.id).then( res => {
+      Agree(this.$route.params.id,this.commentForm.uid).then( res => {
         console.log(res);
         if (res.status) {
-          if(!this.isAgree){
+          if(this.plain){
             this.data.article.agreeCount += 1
-            this.isAgree = true
-            this.$refs.agreeButton.plain = false
-            this.$refs.agreeButton.hairline = false
+            // this.isAgree = true
+            this.plain = false
+            // this.$refs.agreeButton.hairline = false
             setTimeout(() => {
               this.$toast.success("谢谢你的赞同")
               this.agreeLoading = false
             }, 700)
           }else{
             this.data.article.agreeCount -= 1
-            this.isAgree = false
-            this.$refs.agreeButton.plain = true
-            this.$refs.agreeButton.hairline = true
+            // this.isAgree = false
+            this.plain = true
+            // this.$refs.agreeButton.hairline = true
             setTimeout(() => {
-              this.$toast.success("取消点赞")
+              this.$toast.success("已经取消点赞")
               this.agreeLoading = false
             }, 700)
           }
@@ -241,6 +260,13 @@ export default {
     // 点击用户头像进入用户主页
     goUserInfo(){
       this.$router.push('/user/' + this.data.author.id)
+    },
+    // 图片预览
+    openPreview(){
+      this.imagePreview({
+        images:[this.base + '/file/image/' + this.data.article.poster],
+        closeable: true
+      })
     }
   },
 
@@ -339,6 +365,9 @@ export default {
 
 .bottom-bar-icon {
   transform: rotate(-90deg);
+}
+.top-bar-icon {
+  transform: rotate(90deg);
 }
 
 .s1 {

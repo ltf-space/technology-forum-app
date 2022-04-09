@@ -162,11 +162,15 @@ export default {
             this.$router.push("/");
           }else{
             this.loading = false;
+            this.referCode()
           }
         }).catch( err => {
           this.$toast.fail('登陆失败，请检查以重新登陆')
           this.loading = false;
+          this.referCode()
         });
+      }else{
+        this.referCode()
       }
     },
     // 点击注册按钮触发

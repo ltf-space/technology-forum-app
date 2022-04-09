@@ -22,9 +22,9 @@ export function FindAllArticle(type) {
     })
 }
 // 查看内容详情
-export function FindArticleById(id) {
+export function FindArticleById(id,uid) {
     return service({
-        url: '/article/' + id,
+        url: `/article/${id}/${uid}`,
         method: 'get',
     })
 }
@@ -36,9 +36,9 @@ export function SearchArticle(value) {
     })
 }
 // 点赞文章
-export function Agree(id) {
+export function Agree(id,uid) {
     return service({
-        url: '/article/agree/' + id,
+        url: `/article/agree/${id}/${uid}`,
         method: 'get',
     })
 }
