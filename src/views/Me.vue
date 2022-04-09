@@ -270,6 +270,13 @@ export default {
     },
     // 点击更换密码触发
     openPopPwd(){
+      if(!this.user){
+        this.$store.commit('dialog',{
+          title:'提示',
+          msg:'您当前没有登录，是否跳转到登陆界面'
+        })
+        return
+      }
       this.editFormPwd.password = ''
       this.editFormPwd.newPassword = ''
       this.surePassword = ''
@@ -305,6 +312,13 @@ export default {
     },
     // 点击更换昵称触发
     openPopName(){
+      if(!this.user){
+        this.$store.commit('dialog',{
+          title:'提示',
+          msg:'您当前没有登录，是否跳转到登陆界面'
+        })
+        return
+      }
       this.newNickNme = ''
       this.showNickName = true
     },

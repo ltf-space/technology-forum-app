@@ -19,7 +19,8 @@
           </div>
         </div>
       </div>
-      <div class="follow" @click="showShare = true">
+      <!-- <div class="follow" @click="showShare = true"> -->
+      <div class="follow" @click="showShareWei">
         <van-icon name="share"/>
         分享
       </div>
@@ -267,6 +268,45 @@ export default {
         images:[this.base + '/file/image/' + this.data.article.poster],
         closeable: true
       })
+    },
+    // 分享到微信
+    showShareWei(){
+      let shareObj = null;
+      plus.share.getServices(
+          //获取分享服务成功
+        function(services){
+          for(i in services){
+              //判断微信分享服务
+              if(services[i].id == 'weixin'){
+                  shareObj = services[i];
+              }
+          }
+          if(shareObj == null){plus.nativeUI.toast('获取分享服务失败'); return ;}
+          let msg = {
+            // 页面分享标题
+            title:'test',
+            // 分享内容
+            content:"hello world",
+            thumbs:['_www/shareLogo.png'], 
+            href:'https://www.baidu.com',
+            // 'WXSceneSession'分享给好友，'WXSceneTimeline'分享到朋友圈
+            extra:{scene:"WXSceneSession"}
+          }
+          //分享核心代码
+          shareObj.send(
+              msg,
+              function(){
+                  alert( "分享成功！" );
+              },function(e){
+                  alert( "分享失败："+e.message );
+              }
+          );
+        },
+        //获取分享服务失败
+        function(e){
+            console.log(e.message);
+        }
+      );
     }
   },
 
