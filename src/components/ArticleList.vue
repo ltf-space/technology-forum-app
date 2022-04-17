@@ -39,7 +39,9 @@
             </div>
           </div>
           <div class="star-bar">
-            <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.article.agreeCount }}</span> 
+            <van-icon v-if="item.article.agreeCount <= 0" name="like-o" size="12px"/>
+            <van-icon v-if="item.article.agreeCount > 0" name="like" size="12px" />
+            <span class="star-bar-count">{{ item.article.agreeCount }}</span> 
             <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.article.commentCount }}</span>
             <span class="star-bar-count">{{ item.article.createAt }}</span>
             <!-- <van-icon color="#909399" style="float: right;padding-top: 3px" name="ellipsis"/> -->
@@ -70,7 +72,9 @@
             </div>
           </div>
           <div class="star-bar">
-            <van-icon name="like-o" size="12px"/><span class="star-bar-count">{{ item.article.agreeCount }}</span> 
+            <van-icon v-if="item.article.agreeCount <= 0" name="like-o" size="12px"/>
+            <van-icon v-if="item.article.agreeCount > 0" name="like" size="12px" />
+            <span class="star-bar-count">{{ item.article.agreeCount }}</span> 
             <van-icon name="chat-o" size="12px"/><span class="star-bar-count">{{ item.article.commentCount }}</span>
             <span class="star-bar-count">{{ item.article.createAt }}</span>
             <!-- <van-icon color="#909399" style="float: right;padding-top: 3px" name="ellipsis"/> -->

@@ -11,6 +11,7 @@
                controls
                >
           <source :src="base + '/file/video/' + item.fid" type="video/mp4">
+          <!-- <source :src="'http://yyp.asia:8888/api/file/video/' + item.fid" type="video/mp4"> -->
         </video>
       </div>
     </div>

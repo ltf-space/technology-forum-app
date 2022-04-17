@@ -24,7 +24,7 @@ export function userVideo(uid) {
 // 根据用户uid和文章id删除视频
 export function delUserVideo(uid,vid) {
     return service({
-        url: `/video/uid/${uid}/${vid}`,
+        url: `/video/${uid}/${vid}`,
         method: 'get',
     })
 }

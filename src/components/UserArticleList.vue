@@ -12,8 +12,8 @@
               <div class="article-poster" v-if="item.hasPoster">
                 <van-image
                   width="100"
-                  height="63  "
-                  fit="contain"
+                  height="63"
+                  fit="cover"
                   lazy-load
                   :src="base + '/file/image/' + item.poster"
                 >
@@ -23,7 +23,9 @@
           </div>
         </router-link>
         <div class="star-bar">
-          <van-icon name="like-o" size="12px" /><span class="star-bar-count">{{
+          <van-icon v-if="item.agreeCount <= 0" name="like-o" size="12px" />
+          <van-icon v-if="item.agreeCount > 0" name="like" size="12px" />
+          <span class="star-bar-count">{{
             item.agreeCount
           }}</span>
           <van-icon name="chat-o" size="12px" /><span class="star-bar-count">{{
@@ -54,7 +56,9 @@
           </div>
         </router-link>
         <div class="star-bar">
-          <van-icon name="like-o" size="12px" /><span class="star-bar-count">{{
+          <van-icon v-if="item.agreeCount <= 0" name="like-o" size="12px" />
+          <van-icon v-if="item.agreeCount > 0" name="like" size="12px" />
+          <span class="star-bar-count">{{
             item.agreeCount
           }}</span>
           <van-icon name="chat-o" size="12px" /><span class="star-bar-count">{{
@@ -127,7 +131,7 @@ export default {
             this.user = JSON.parse(localStorage.getItem("user"));
             // 使文章数减1，评论数相应减少
             this.user.articleCount--;
-            this.user.commentCount -= res.data;
+            this.user.commentCount = res.data;
             localStorage.setItem("user", JSON.stringify(this.user));
             this.$emit("reloadArticle");
           });

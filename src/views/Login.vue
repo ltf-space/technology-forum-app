@@ -244,7 +244,11 @@ export default {
 .main {
   width: 100%;
   height: 100vh;
-  background: #23343c;
+  /* background: #23343c; */
+  background: url('../assets/loginbizhi.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .header {

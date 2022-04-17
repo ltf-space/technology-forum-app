@@ -4,7 +4,9 @@ import {Toast} from "vant"
 // export const BASE_RUL = 'http://localhost:8080/api'
 // 可以在相同局域网下打开
 // export const BASE_RUL = 'http://192.168.31.134:8080/api'
-export const BASE_RUL = 'http://192.168.101.119:8080/api'
+// export const BASE_RUL = 'http://192.168.101.121:8080/api'
+// export const BASE_RUL = 'yyp.asia:8888/api'
+export const BASE_RUL = '/api'
 
 const request = axios.create({
     baseURL: BASE_RUL,
@@ -77,7 +79,7 @@ request.interceptors.response.use(
         error.message = '连接服务器失败'
       }
     
-      Message.error(error.message)
+      Toast.error(error.message)
       /***** 处理结束 *****/
       //如果不需要错误处理，以上的处理过程都可省略
       return Promise.resolve(error.response)

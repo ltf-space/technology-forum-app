@@ -75,6 +75,13 @@
         <van-uploader :after-read="onRead2" :max-count="1" v-model="posterFile"/>
       </div>
     </van-popup>
+
+    <!-- 遮罩层 -->
+    <van-overlay :show="zzIsShow">
+      <div class="wrapper">
+        <van-loading color="#fff" vertical v-if="zzIsShow">视频文件多大，请耐心等待</van-loading>
+      </div>
+    </van-overlay>
   </div>
 </template>
 
@@ -114,7 +121,9 @@ export default {
         fid: '',
       },
       // 用户信息
-      userInfo:null
+      userInfo:null,
+    // 遮罩层显示
+      zzIsShow:false
     }
   },
 
@@ -135,6 +144,8 @@ export default {
     },
 // 视频上传成功后回调
     onRead() {
+      // 显示遮罩层
+      this.zzIsShow = true
       let formData = new FormData()
       let file = this.fileList[0].file
       formData.append("file", file, file.name)
@@ -145,7 +156,11 @@ export default {
       }
       axios.post(BASE_RUL + "/file/video", formData, config).then((res) => {
         console.log(res);
-        if (res.status === 200) this.videoForm.fid = res.data
+        if (res.status === 200){
+           this.videoForm.fid = res.data
+          //  关闭遮罩层
+           this.zzIsShow = false
+        }
       })
     },
 // 文章上传成功后回调
@@ -181,6 +196,9 @@ export default {
           // 将本地存储的视频数+1
           this.userInfo = JSON.parse(localStorage.getItem('user'))
           this.localStorageUser(this.userInfo,1)
+          setTimeout(() => {
+            this.$router.push("/video")
+          }, 600)
         })
       }
     },
@@ -278,5 +296,11 @@ export default {
   font-size: 14px;
   color: #0066ff;
   padding-top: 4px;
+}
+ .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 </style>

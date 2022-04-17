@@ -22,7 +22,7 @@
           <span class="author-des">{{ userInfo.author.school }}</span>
         </div>
         <!-- 关注 -->
-        <div>
+        <div @click="guanzhu">
           <van-button type="default">
             <van-icon name="plus" />
             关注
@@ -80,17 +80,21 @@ export default {
     // 获取用户信息
     async getUserInfo(uid) {
       const res_article = await userArticle(uid);
-      if (!res_article.status) this.$toast.info("获取用户文章信息失败");
+      if (!res_article.status) this.$toast.fail("获取用户文章信息失败");
       this.userInfo = res_article.data;
       // console.log(this.userInfo);
       const res_video = await userVideo(uid);
-      if (!res_video.status) this.$toast.info("获取用户视频信息失败");
+      if (!res_video.status) this.$toast.fail("获取用户视频信息失败");
       this.userVideo = res_video.data;
       // console.log(res_video);
     },
     goBack() {
       this.$router.back();
     },
+    // 点击关注按钮
+    guanzhu(){
+      this.$toast('此功能暂未开发，请尽情期待')
+    }
   },
 };
 </script>
@@ -105,7 +109,7 @@ export default {
   width: 100%;
   height: 180px;
   /* background: url("../assets/background.jpg") no-repeat 0 0 / 100% 160px; */
-  background: url("../assets/background.jpg");
+  background: url("../assets/background.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;

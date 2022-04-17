@@ -284,10 +284,11 @@ export default {
           if(shareObj == null){plus.nativeUI.toast('获取分享服务失败'); return ;}
           let msg = {
             // 页面分享标题
-            title:'test',
+            title:this.data.article.title,
             // 分享内容
-            content:"hello world",
-            thumbs:['_www/shareLogo.png'], 
+            content:this.content,
+            // thumbs:['_www/shareLogo.png'], 
+            thumbs:['../assets/profile.png'], 
             href:'https://www.baidu.com',
             // 'WXSceneSession'分享给好友，'WXSceneTimeline'分享到朋友圈
             extra:{scene:"WXSceneSession"}
@@ -296,9 +297,11 @@ export default {
           shareObj.send(
               msg,
               function(){
-                  alert( "分享成功！" );
+                  // alert( "分享成功！" );
+                  this.$toast.success("分享成功！")
               },function(e){
-                  alert( "分享失败："+e.message );
+                  // alert( "分享失败："+e.message );
+                  this.$toast.fail("分享失败："+e.message)
               }
           );
         },
